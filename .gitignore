@@ -1,1 +1,4 @@
 .Rproj.user
+communication.Rcheck/
+communication*.tar.gz
+communication*.tgz
