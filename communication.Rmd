@@ -10,14 +10,18 @@ params:
 ---
 
 ```{r setup, include=FALSE}
+
 knitr::opts_chunk$set(echo = TRUE)
+
 ```
 
 ## Problem statement
 
 ## Solution statement
 
-## Cars dataset
+## Everything else
+
+### Cars dataset
 
 ```{r cars}
 
