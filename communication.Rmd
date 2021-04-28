@@ -13,6 +13,8 @@ params:
 
 knitr::opts_chunk$set(echo = TRUE)
 
+#install.packages('tidyverse')
+library(tidyverse)
 ```
 
 ## Problem statement
@@ -21,16 +23,21 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Everything else
 
-### Cars dataset
+
 
 ```{r cars}
 
-summary(cars)
+data_adult <-read.csv("https://raw.githubusercontent.com/guru99-edu/R-Programming/master/adult.csv")
 ```
 
-### Including Plots
+### Check continuous variables
 
-You can also embed plots, for example:
+```{r}
+
+continuous <-select_if(data_adult, is.numeric)
+summary(continuous)
+
+```
 
 ```{r}
 
