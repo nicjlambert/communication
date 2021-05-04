@@ -11,10 +11,20 @@ params:
 
 ```{r setup, include=FALSE}
 
+# https://www.guru99.com/r-generalized-linear-model.html
+
 knitr::opts_chunk$set(echo = TRUE)
 
-#install.packages('tidyverse')
+######################################
+#Load packages
+library(arm)
+library(car)
+library(ggplot2)
+library(lattice)
+library(lawstat)
+library(outliers)
 library(tidyverse)
+######################################
 ```
 
 ## Problem statement
@@ -28,6 +38,71 @@ library(tidyverse)
 ```{r cars}
 
 data_adult <-read.csv("https://raw.githubusercontent.com/guru99-edu/R-Programming/master/adult.csv")
+
+#This inspects the dataframe and tells us what sort of data each of the columns are 
+str(data_adult)
+
+# 'data.frame':	48842 obs. of  10 variables:
+#  $ x              : int  1 2 3 4 5 6 7 8 9 10 ...
+#  $ age            : int  25 38 28 44 18 34 29 63 24 55 ...
+#  $ workclass      : chr  "Private" "Private" "Local-gov" "Private" ...
+#  $ education      : chr  "11th" "HS-grad" "Assoc-acdm" "Some-college" ...
+#  $ educational.num: int  7 9 12 10 10 6 9 15 10 4 ...
+#  $ marital.status : chr  "Never-married" "Married-civ-spouse" "Married-civ-spouse" "Married-civ-spouse" ...
+#  $ race           : chr  "Black" "White" "White" "Black" ...
+#  $ gender         : chr  "Male" "Male" "Male" "Male" ...
+#  $ hours.per.week : int  40 50 40 40 30 30 40 32 40 10 ...
+#  $ income         : chr  "<=50K" "<=50K" ">50K" ">50K" ...
+
+dim(data_adult)
+# size of the dataframe - 48842 rows, 10 columns
+
+# DATA EXPLORATION
+# Are there missing values?
+colSums(is.na(data_adult))
+
+#    x             age       workclass       education educational.num  marital.status 
+#    0               0               0               0               0               0 
+# race          gender  hours.per.week          income 
+#    0               0               0               0 
+
+# OUTLIERS
+
+# Fig 2.1 life
+par(mar = c(6,6,2,2), cex.lab = 1.5)
+boxplot(hours.per.week ~ education, 
+        ylab = "Hours per week",
+        xlab = "Education",
+        data = data_adult, 
+        las=1)
+
+# Fig. 2.2 a multi-panel dotchart to see all variables simultaneously.
+
+# First make a vector of variables of interest
+Names <- c("hours.per.week", "education")
+
+# Then plot
+dotplot(as.matrix(as.matrix(data_adult[,Names])),
+        groups=FALSE,
+        strip = strip.custom(bg = 'white',
+                             par.strip.text = list(cex = 1.2)),
+        scales = list(x = list(relation = "free", draw = TRUE),
+                      y = list(relation = "free", draw = FALSE)),
+        col = 1, cex  = 1, pch = 16,
+        xlab = list(label = "Value of the variable", cex = 1.2),
+        ylab = list(label = "Order of the data", 
+                    cex = 1.2))
+
+# Dotplots to examine each variable separately, grouped by season.
+# It shows the order and value of each of the numerical variables.
+
+#Fig 2.3
+x <- data_adult[order(data_adult$hours.per.week),]
+x$fEco <- factor(x$educational.num)
+dotchart(x$hours.per.week, cex = 0.7, pch = 16, 
+         groups = x$fEco,
+         xlab = "Low flow level")
+
 ```
 
 ### Check continuous variables
@@ -37,6 +112,13 @@ data_adult <-read.csv("https://raw.githubusercontent.com/guru99-edu/R-Programmin
 continuous <-select_if(data_adult, is.numeric)
 summary(continuous)
 
+```
+```{r}
+
+# Histogram with kernel density curve
+
+ggplot(continuous, aes(x = hours.per.week)) +
+    geom_density(alpha = .2, fill = "#FF6666") + theme_bw()
 ```
 
 ```{r}
