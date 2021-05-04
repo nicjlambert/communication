@@ -118,7 +118,7 @@ summary(continuous)
 # Histogram with kernel density curve
 
 ggplot(continuous, aes(x = hours.per.week)) +
-    geom_density(alpha = .2, fill = "#FF6666") + theme_bw()
+    geom_density(alpha = .2, fill = "red") + theme_bw()
 ```
 
 ```{r}
