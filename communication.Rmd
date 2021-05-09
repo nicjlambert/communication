@@ -15,8 +15,8 @@ params:
 
 knitr::opts_chunk$set(echo = TRUE)
 
-######################################
-#Load packages
+### lobraries ----
+
 library(arm)
 library(car)
 library(ggplot2)
@@ -24,7 +24,7 @@ library(lattice)
 library(lawstat)
 library(outliers)
 library(tidyverse)
-######################################
+
 ```
 
 ## Problem statement
