@@ -15,7 +15,7 @@ params:
 
 knitr::opts_chunk$set(echo = TRUE)
 
-### lobraries ----
+### libraries ----
 
 library(arm)
 library(car)
