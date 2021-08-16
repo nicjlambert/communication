@@ -22,7 +22,7 @@ install.packages("devtools")
 library(devtools)
 ```
 
-3. In most cases, you just use install_github("author/package"). For example, with my R/broman package, which exists at github.com/nicjlambert/communication, you’d type
+3. In most cases, you just use install_github("author/package"). For example, with my R/communication package, which exists at github.com/nicjlambert/communication, you’d type
 
 ``` r
 install_github("nicjlambert/communication")
